@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import MessageForm from "./components/MessageForm";
+import MessageList from "./components/MessageList";
+import setRandomName from "./utilities/SetRandomName";
 
 function App() {
+  const [user, setUser] = useState({
+    username: setRandomName(),
+  });
+  const [newMessage, setNewMessage] = useState([]);
+  const [connect, setConnect] = useState(null);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const connect = new window.Scaledrone("JGmqrCsbmbemwbQe", {
+      data: user,
+    });
+    setConnect(connect);
+    // eslint-disable-next-line
+  }, []);
+  if (connect) {
+    connect.on("open", (error) => {
+      if (error) {
+        console.log("Error on connecting", error);
+      }
+      const myUser = users;
+      myUser.push(user);
+      setUsers(myUser);
+
+      const chatUser = { ...user };
+      user.id = connect.clientId;
+      setUser({ chatUser });
+
+    
+
+      const myRoom = connect.subscribe("observable-room");
+      myRoom.on("data", (text, chatUser) => {
+        const messages = newMessage;
+        const username = chatUser.clientData.username;
+        const chatUserID = chatUser.id;
+        const currentChatUser = chatUser;
+        const diversMessages = currentChatUser.id === user.id;
+        const msgClass= diversMessages ? "my-msg" : "other-msg";
+        const date = new Date();
+        const time = date.getHours()+":"+date.getMinutes();
+        messages.push({ text, username, chatUserID, time, msgClass });
+        setNewMessage([...newMessage, messages]);
+      });
+    });
+  }
+
+  const onNewMessage = (message) => {
+    connect.publish({
+      room: "observable-room",
+      message,
+    });
+  };
+
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="app_name">Galaxy Chat</h1>
+      <div className="msger">
+        <MessageList newMessage={newMessage} />
+        <MessageForm onNewMessage={onNewMessage} users={users} />
+      </div>
     </div>
   );
 }
-
 export default App;
