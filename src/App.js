@@ -34,14 +34,14 @@ function App() {
 
     
 
-      const myRoom = connect.subscribe("observable-room");
-      myRoom.on("data", (text, chatUser) => {
+      const chatRoom = connect.subscribe("observable-room");
+      chatRoom.on("data", (text, chatUser) => {
         const messages = newMessage;
         const username = chatUser.clientData.username;
         const chatUserID = chatUser.id;
         const currentChatUser = chatUser;
-        const diversMessages = currentChatUser.id === user.id;
-        const msgClass= diversMessages ? "my-msg" : "other-msg";
+        const splitMessages = currentChatUser.id === user.id;
+        const msgClass= splitMessages ? "my-msg" : "other-msg";
         const date = new Date();
         const time = date.getHours()+":"+date.getMinutes();
         messages.push({ text, username, chatUserID, time, msgClass });
@@ -63,8 +63,9 @@ function App() {
       <h1 className="app_name">Galaxy Chat</h1>
       <div className="msger">
         <MessageList newMessage={newMessage} />
-        <MessageForm onNewMessage={onNewMessage} users={users} />
+        
       </div>
+      <MessageForm onNewMessage={onNewMessage} users={users} />
     </div>
   );
 }

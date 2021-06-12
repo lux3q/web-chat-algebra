@@ -20,11 +20,10 @@ export default function MessageCreator(props) {
         >
           
           <div className="username">{message.username}</div>
-          <div className="time">{message.time}</div>
           <div className="msg">
             {message.text}
-            
           </div>
+          <div className="time">{message.time}</div>
           </div>
       
       
