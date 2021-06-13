@@ -8,35 +8,33 @@ function App() {
   const [user, setUser] = useState({
     username: setRandomName(),
   });
-  const [newMessage, setNewMessage] = useState([]);
-  const [connect, setConnect] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [drone, setDrone] = useState();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const connect = new window.Scaledrone("JGmqrCsbmbemwbQe", {
+    const drone = new window.Scaledrone("JGmqrCsbmbemwbQe", {
       data: user,
     });
-    setConnect(connect);
+    setDrone(drone);
     // eslint-disable-next-line
   }, []);
-  if (connect) {
-    connect.on("open", (error) => {
+  if (drone) {
+    drone.on("open", (error) => {
       if (error) {
         console.log("Error on connecting", error);
       }
-      const myUser = users;
-      myUser.push(user);
-      setUsers(myUser);
+      const myUsers = users;
+      myUsers.push(user);
+      setUsers(myUsers);
 
       const chatUser = { ...user };
-      user.id = connect.clientId;
+      user.id = drone.clientId;
       setUser({ chatUser });
 
-    
-
-      const chatRoom = connect.subscribe("observable-room");
+      const chatRoom = drone.subscribe("observable-room");
       chatRoom.on("data", (text, chatUser) => {
-        const messages = newMessage;
+        const tempMessages = messages;
         const username = chatUser.clientData.username;
         const chatUserID = chatUser.id;
         const currentChatUser = chatUser;
@@ -44,14 +42,14 @@ function App() {
         const msgClass= splitMessages ? "my-msg" : "other-msg";
         const date = new Date();
         const time = date.getHours()+":"+date.getMinutes();
-        messages.push({ text, username, chatUserID, time, msgClass });
-        setNewMessage([...newMessage, messages]);
+        tempMessages.push({ text, username, chatUserID, time, msgClass });
+        setMessages([...tempMessages, messages]);
       });
     });
   }
 
-  const onNewMessage = (message) => {
-    connect.publish({
+  const onSendMessage = (message) => {
+    drone.publish({
       room: "observable-room",
       message,
     });
@@ -62,10 +60,10 @@ function App() {
     <div className="App">
       <h1 className="app_name">Galaxy Chat</h1>
       <div className="msger">
-        <MessageList newMessage={newMessage} />
+        <MessageList messages={messages} />
         
       </div>
-      <MessageForm onNewMessage={onNewMessage} users={users} />
+      <MessageForm onSendMessage={onSendMessage} users={users} />
     </div>
   );
 }

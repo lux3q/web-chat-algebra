@@ -1,36 +1,32 @@
 import React, { useEffect, useRef } from "react";
 
-export default function MessageCreator(props) {
-  const message = props.newMessage;
-  const messageEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+function MessageList(props) {
+  const messages = props.messages;
+  const lastMsg = useRef(null);
+  const scroll = () => {
+    lastMsg.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [message]);
+  useEffect(scroll, [messages]);
 
   return (
     <div className="messageList">
-       
-      {props.newMessage.map((message) => (
+
+      {messages.map((message) => (
         <div
           className={message.msgClass}
-          key={props.newMessage.indexOf(message)}
+          key={messages.indexOf(message)}
         >
-          
+
           <div className="username">{message.username}</div>
-          <div className="msg">
-            {message.text}
-          </div>
+          <div className="msg">{message.text}</div>
           <div className="time">{message.time}</div>
-          </div>
-      
-      
+        </div>
       ))}
-      
-      <div ref={messageEndRef} />
-      
-      </div>
+
+      <div ref={lastMsg} />
+
+    </div>
   );
 }
+export default MessageList;

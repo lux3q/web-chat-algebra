@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
-export default function MessageForm(props) {
-  const [message, setMessage] = useState({
-    text: "",
-  });
+function MessageForm(props) {
+  const [message, setMessage] = useState({ text: "" });
 
   const onChangeMessage = (e) => {
     setMessage({ text: e.target.value });
@@ -11,9 +9,7 @@ export default function MessageForm(props) {
 
   const onSubmitMessage = (e) => {
     e.preventDefault();
-    if (typeof props.onNewMessage === "function") {
-      props.onNewMessage(message.text);
-    }
+    props.onSendMessage(message.text);
     setMessage({ text: "" });
   };
 
@@ -33,3 +29,4 @@ export default function MessageForm(props) {
     </div>
   );
 }
+export default MessageForm;
