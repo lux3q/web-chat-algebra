@@ -1,143 +1,147 @@
-  html {
-    box-sizing: border-box;
-  }
-  
-  *,
-  *:before,
-  *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-  }
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: Helvetica, sans-serif;
-    background-color: #ddd;
-  }
+html {
+  box-sizing: border-box;
+}
 
-  .msger {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Helvetica, sans-serif;
+  background-color: #ddd;
+}
+
+.app {
+  max-width: 576px;
+}
+
+.messenger {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  min-width: 1;
+  height: 450px;
+  background-image: url(img/background.jpg);
+  background-size: cover;
+  opacity: 0.9;
+  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+}
+
+.appName {
+  display: flex;
+  justify-content: center;
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 2.5em;
+  text-shadow: 1px 1px 1px #000, 3px 3px 5px #8486a7;
+  background-color: #3d496c;
+  padding: 3px;
+  color: azure;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.messageList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+.messageList::-webkit-scrollbar {
+  width: 10px;
+}
+.messageList::-webkit-scrollbar-track {
+  background: #d698b8;
+}
+.messageList::-webkit-scrollbar-thumb {
+  background: #e94e9e;
+}
+
+.message:last-of-type {
+  margin: 0;
+}
+.myMessage,
+.otherMessage {
+  max-width: 0.6;
+  min-width: 0.2;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 4px;
+  background-color: whitesmoke;
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+.myMessage {
+  place-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.otherMessage {
+  place-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.username {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #30324d;
+  font-family: "Delius Unicase", cursive;
+}
+.time {
+  font-size: 0.85em;
+  text-align: right;
+}
+
+.input {
+  background-color: #b6bcce;
+  border-radius: 5px;
+  height: 2.5em;
+}
+
+.messengerInputarea {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: #30324d;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.messengerInputarea * {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1em;
+}
+
+.messengerSendButton {
+  margin-left: 10px;
+  background: rgb(85 195 176);
+  color: #fff;
+  font-weight: bold;
+  width: 0.2;
+  cursor: pointer;
+  transition: background 0.23s;
+}
+.messengerSendButton:hover {
+  background: rgb(218 138 179);
+}
+@media (min-width: 576px) {
+  .app {
     min-width: 750px;
+  }
+  .messenger {
+    min-width: 0.9;
     height: 450px;
-    background-image: url(img/background.jpg);
-    background-size: cover;
-    opacity: 90%;
-    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
   }
-  
-  .app_name {
-    display: flex;
-    justify-content: center;
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2.5em;
-    text-shadow: 1px 1px 1px #000, 3px 3px 5px #8486a7;
-    background-color: #3d496c;
-    padding: 3px;
-    color: azure;
-    border-top-left-radius: 15px;
-     border-top-right-radius: 15px;
-
-  }
-  
-  .messageList {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-  }
-  .messageList::-webkit-scrollbar {
-    width: 10px;
-  }
-  .messageList::-webkit-scrollbar-track {
-    background: #d698b8;
-  }
-  .messageList::-webkit-scrollbar-thumb {
-   
-    background: #e94e9e;
-
-  }
-    
-  
-  .msg:last-of-type {
-    margin: 0;
-  }
-  .my-msg, .other-msg{
-
-    max-width: 350px;
-    min-width: 150px;
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 4px;
-    background-color: whitesmoke;
-    opacity: 95%;
-    word-break: break-word;
-  
-  }
-
-  .my-msg {
-    place-self: flex-end;
-    border-bottom-right-radius: 0;
-  }
-
-  .other-msg {
-    place-self: flex-start;
-    border-bottom-left-radius: 0;
-  }
-
-
-  .username {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #30324d;
-    font-family: 'Delius Unicase', cursive;
-
-  }
-  .time {
-    font-size: 0.85em;
-    text-align: right;
-  }
-
   .input {
-    min-width: 550px;
-    background-color: #b6bcce;
-    border-radius: 5px;
-    height: 2.5em;
+    min-width: 80%;
   }
-  
-  .msger-inputarea {
-    min-width: 600px;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-    background: #30324d;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-  .msger-inputarea * {
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    font-size: 1em;
-  }
-  
-  .msger-send-btn {
-    margin-left: 10px;
-    background: rgb(85 195 176);
-    color: #fff;
-    font-weight: bold;
-    width: 100px;
-    cursor: pointer;
-    transition: background 0.23s;
-  }
-  .msger-send-btn:hover {
-    background: rgb(218 138 179);
-  }
-
-  
-  
+}
