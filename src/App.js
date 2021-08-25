@@ -39,9 +39,9 @@ function App() {
         const chatUserID = chatUser.id;
         const currentChatUser = chatUser;
         const splitMessages = currentChatUser.id === user.id;
-        const msgClass= splitMessages ? "my-msg" : "other-msg";
+        const msgClass = splitMessages ? "myMessage" : "otherMessage";
         const date = new Date();
-        const time = date.getHours()+":"+date.getMinutes();
+        const time = date.getHours() + ":" + date.getMinutes();
         tempMessages.push({ text, username, chatUserID, time, msgClass });
         setMessages([...tempMessages, messages]);
       });
@@ -56,12 +56,10 @@ function App() {
   };
 
   return (
-    
-    <div className="App">
-      <h1 className="app_name">Galaxy Chat</h1>
-      <div className="msger">
+    <div className="app">
+      <h1 className="appName">Galaxy Chat</h1>
+      <div className="messenger">
         <MessageList messages={messages} />
-        
       </div>
       <MessageForm onSendMessage={onSendMessage} users={users} />
     </div>

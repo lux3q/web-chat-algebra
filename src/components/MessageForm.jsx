@@ -15,14 +15,18 @@ function MessageForm(props) {
 
   return (
     <div>
-      <form className="msger-inputarea " onSubmit={onSubmitMessage}>
+      <form className="messengerInputarea" onSubmit={onSubmitMessage}>
         <input
           className="input"
           type="text"
           value={message.text}
           onChange={onChangeMessage}
         />
-        <button className="msger-send-btn" type="submit" disabled={!message.text}>
+        <button
+          className="messengerSendButton"
+          type="submit"
+          disabled={!message.text}
+        >
           Send
         </button>
       </form>

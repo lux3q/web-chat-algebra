@@ -11,21 +11,15 @@ function MessageList(props) {
 
   return (
     <div className="messageList">
-
       {messages.map((message) => (
-        <div
-          className={message.msgClass}
-          key={messages.indexOf(message)}
-        >
-
+        <div className={message.msgClass} key={messages.indexOf(message)}>
           <div className="username">{message.username}</div>
-          <div className="msg">{message.text}</div>
+          <div className="message">{message.text}</div>
           <div className="time">{message.time}</div>
         </div>
       ))}
 
       <div ref={lastMsg} />
-
     </div>
   );
 }
